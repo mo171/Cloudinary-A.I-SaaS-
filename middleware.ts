@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
  * This function defines which routes are "public"
  * (accessible without logging in)
  */
-const isPublicRoute = createRouteMatcher(["/signin", "/signup", "/", "/home"]);
+const isPublicRoute = createRouteMatcher(["/sign-in", "/sign-up", "/", "/home"]);
 const isPublicApiRoute = createRouteMatcher(["/api/videos"]);
 
 /*

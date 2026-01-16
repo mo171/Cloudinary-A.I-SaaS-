@@ -1,7 +1,20 @@
+/*
+ * Root Layout Component
+ * This is the top-level layout that wraps your entire application.
+ * It's responsible for global styles, fonts, and authentication providers.
+ *
+ * @param {children} - The content of the current page being viewed.
+ * @used_in: Automatically used by Next.js for all routes.
+ */
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+
+/*
+ * ClerkProvider Logic:
+ * Wraps the entire application to provide authentication context (login/logout state).
+ */
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,13 +38,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          {children}
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

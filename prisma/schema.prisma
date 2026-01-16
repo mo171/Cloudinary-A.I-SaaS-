@@ -1,0 +1,30 @@
+/**
+ * Prisma Database Schema
+ * Defines the structure of the database tables and their relationships.
+ * @used_by: Prisma Client to generate type-safe database queries.
+ * @logic: Currently defines a simple 'Video' model with metadata fields.
+ */
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // url = env("DATABASE_URL")
+}
+
+model Video {
+  id             String   @id @default(cuid())
+  title          String
+  description    String?
+  publicId       String
+  originalSize   String
+  compressedSize String
+  duration       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+}

@@ -4,8 +4,9 @@ import { NextResponse } from "next/server";
 /*
  * This function defines which routes are "public"
  * (accessible without logging in)
+ * once logged in a logic is performed that this route are not availbale to them @isPublicRoute
  */
-const isPublicRoute = createRouteMatcher(["/sign-in", "/sign-up", "/", "/home"]);
+const isPublicRoute = createRouteMatcher(["/sign-in", "/sign-up", "/", "/home",]);
 const isPublicApiRoute = createRouteMatcher(["/api/videos"]);
 
 /*
@@ -16,9 +17,9 @@ const isPublicApiRoute = createRouteMatcher(["/api/videos"]);
  * @param {req} - The incoming request object (URL, headers, query params)
  * @returns {NextResponse} - Redirects, JSON errors, or allows the request to proceed
  */
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware( async (auth, req) => {
   // auth() returns an object containing the user's ID if they are logged in
-  const { userId } = auth();
+  const { userId } = await auth();
 
   // Get the current URL from the request can be accessed by req.url this gives url but sometimes gives error isleye new URL(req.url) use krte hai
   const currentUrl = new URL(req.url);
@@ -34,7 +35,7 @@ export default clerkMiddleware((auth, req) => {
    * AND that page is NOT the home page, send them to /home.
    * This prevents logged-in users from seeing the sign-in/sign-up pages again.
    */
-  if (userId && isPublicRoute(currentUrl.pathname) && !isHomePage) {
+  if (userId && isPublicRoute(req) && !isHomePage) {
     return NextResponse.redirect(new URL("/home", req.url));
   }
 
@@ -46,7 +47,7 @@ export default clerkMiddleware((auth, req) => {
      */
     if (!isPublicApiRoute(req) && !isPublicRoute(req)) {
       // ...send them to the sign-in page.
-      return NextResponse.redirect(new URL("/signin", req.url));
+      return NextResponse.redirect(new URL("/sign-in", req.url));
     }
 
     /*

@@ -11,6 +11,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs"; //Imporatant clerk provider for auth
 
+/*
+      * ClerkProvider Logic:
+      * Wraps the entire application to provide authentication context (login/logout state).
+      */
 
 // FONTS SETTING
 const geistSans = Geist({
@@ -34,18 +38,15 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-     /*
-      * ClerkProvider Logic:
-      * Wraps the entire application to provide authentication context (login/logout state).
-      */
 
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+
+    <html lang= "en" >
+    <body
+          className={ `${geistSans.variable} ${geistMono.variable} antialiased` }
         >
-          {children}
-        </body>
-      </html>
+    { children }
+    </body>
+    </html>
     </ClerkProvider>
   );
 }

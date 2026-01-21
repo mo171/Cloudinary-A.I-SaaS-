@@ -8,7 +8,7 @@
  */
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { uploadVideoToCloudinary } from '@/lib/cloudnary';
 
 function page() {
   const [file, setFile] = useState<File | null>(null);
@@ -36,18 +36,30 @@ function page() {
      formData.append('title', title);
      formData.append('description', description);
      formData.append('originalSize', file.size.toString());
-
+     console.log(formData);
+     
+     const result = await uploadVideoToCloudinary(file);
      //TODO: upload file to prisma
      try {
-        const response = await axios.post('/api/video-upload', formData);
-         router.push("/")
+        const response = await fetch('/api/video-upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Upload successful:', result);
+        router.push("/")
      } catch (error) {
-      
-     }finally{
+        console.error('Upload error:', error);
+        alert('Upload failed. Please try again.');
+     } finally {
        setIsUploading(false);
      }
-
-    };
+  };
 
   return (
  <div className=" mx-auto p-4">

@@ -12,9 +12,9 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs"; //Imporatant clerk provider for auth
 
 /*
-      * ClerkProvider Logic:
-      * Wraps the entire application to provide authentication context (login/logout state).
-      */
+  * ClerkProvider Logic:
+  * Wraps the entire application to provide authentication context (login/logout state).
+*/
 
 // FONTS SETTING
 const geistSans = Geist({

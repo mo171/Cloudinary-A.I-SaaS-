@@ -79,17 +79,6 @@ function SocialShare() {
  * document body, clicks the link to trigger the download, removes the link from the
  * document body, and finally revokes the object URL to free up memory.
  */   
-
-
-/**
- * Downloads the image from the given src link.
- * If the imageRef is null, it simply returns without doing anything.
- * It fetches the image from the src link, creates a blob from the response, and
- * creates a new link element with the blob as its href. It then appends the link to the
- * document body, clicks the link to trigger the download, removes the link from the
- * document body, and finally revokes the object URL to free up memory.
- * @returns {void}
- */
 const handleDownload = () => {
   if(!imageRef.current){
     return;
@@ -108,11 +97,8 @@ const handleDownload = () => {
   })
 }
 
-
-
-  
-
   return (
+    
     <div className="container mx-auto p-4 max-w-4xl">
           <h1 className="text-3xl font-bold mb-6 text-center">
             Social Media Image Creator

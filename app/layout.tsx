@@ -1,7 +1,7 @@
 /*
  * Root Layout Component
  * This is the top-level layout that wraps your entire application.
- * It's responsible for global styles, fonts, and authentication providers.
+ * It's responsible for global styles(css file+tailwind), fonts, and authentication providers.
  *
  * @param {children} - The content of the current page being viewed.
  * @used_in: Automatically used by Next.js for all routes.
@@ -9,18 +9,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs"; //Imporatant clerk provider for auth
 
-/*
- * ClerkProvider Logic:
- * Wraps the entire application to provide authentication context (login/logout state).
- */
 
+// FONTS SETTING
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -38,6 +34,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
+     /*
+      * ClerkProvider Logic:
+      * Wraps the entire application to provide authentication context (login/logout state).
+      */
+
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}

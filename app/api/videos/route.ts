@@ -1,10 +1,10 @@
 /*
- * API Route: Fetch All Videos
+ * API Route: Fetch All Videos ENDPOINT:/api/videos
  * This route handles GET requests to retrieve a list of all videos from the database.
  *
  * @used_in: Client-side components or pages that need to display a video list.
  */
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server"; // default way to take and pass on response in next-js
 import prisma from "@/lib/prisma";
 
 /*
@@ -21,6 +21,7 @@ import prisma from "@/lib/prisma";
  */
 export async function GET(request: NextRequest) {
   try {
+    // Query the database for all videos (from the doc of prisma)
     const videos = await prisma.video.findMany({
       orderBy: {
         createdAt: "desc",

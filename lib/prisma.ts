@@ -1,4 +1,5 @@
 /*
+ *  comes from doc can be copy pasted for future reference
  * This file sets up a single instance of the Prisma Client.
  * In development, Next.js refreshes files often, which can create too many
  * database connections. This "Singleton" pattern ensures we only use one.

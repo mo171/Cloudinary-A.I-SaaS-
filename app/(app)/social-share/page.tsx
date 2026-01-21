@@ -59,7 +59,6 @@ function SocialShare() {
       const response  = await axios.post("/api/image-upload", formData);
       
       const data = response.data;
-      // console.log(data);
       
       setUploadedImage(data.publicId);
 
@@ -81,25 +80,34 @@ function SocialShare() {
  * document body, and finally revokes the object URL to free up memory.
  */   
 
-  const handleDownload = () => {
-    if(!imageRef.current){
-      return;
-    }
-    // takes the link and downloads the file (same done for webscrapping)
-    fetch(imageRef.current.src)
-    .then((response) =>response.blob())
-    .then((blob) => {
-      window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      const url =  link.href
-      link.download = `${selectedFormat.replace(/\s+/g, "-").toLowerCase()}.png`;
-      document.body.appendChild(link);
-      link.click()
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(link)
-    })
+
+/**
+ * Downloads the image from the given src link.
+ * If the imageRef is null, it simply returns without doing anything.
+ * It fetches the image from the src link, creates a blob from the response, and
+ * creates a new link element with the blob as its href. It then appends the link to the
+ * document body, clicks the link to trigger the download, removes the link from the
+ * document body, and finally revokes the object URL to free up memory.
+ * @returns {void}
+ */
+const handleDownload = () => {
+  if(!imageRef.current){
+    return;
   }
+  fetch(imageRef.current.src)
+  .then((response) => response.blob())
+  .then((blob) => {
+    const url = window.URL.createObjectURL(blob);  // Store the blob URL
+    const link = document.createElement("a");
+    link.href = url;  // Set the href to the blob URL
+    link.download = `${selectedFormat.replace(/\s+/g, "-").toLowerCase()}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);  // Remove only once
+    window.URL.revokeObjectURL(url);  // Clean up the blob URL
+  })
+}
+
 
 
   
@@ -170,6 +178,7 @@ function SocialShare() {
                         onLoad={() => setIsTransforming(false)}
                         />
                     </div>
+
                   </div>
 
                   <div className="card-actions justify-end mt-6">
